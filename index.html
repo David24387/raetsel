@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Euromaster Safety Check</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; background: #f4f4f4; }
+        .container {
+            position: relative;
+            display: inline-block;
+            margin-top: 20px;
+            cursor: crosshair;
+            border: 5px solid #005596; /* Euromaster Blau */
+        }
+        img { max-width: 1000px; display: block; }
+        .hotspot {
+            position: absolute;
+            border: 3px solid transparent;
+            border-radius: 20%; /* Etwas eckiger für Arme/Schalter */
+            transition: all 0.3s;
+            z-index: 10;
+        }
+        .hotspot:hover { border-color: rgba(255,255,255,0.5); }
+        .hotspot.found {
+            border-color: #e2001a !important; 
+            box-shadow: 0 0 15px rgba(226, 0, 26, 0.9);
+            background: rgba(226, 0, 26, 0.2);
+        }
+        .counter { font-size: 1.5rem; font-weight: bold; color: #005596; }
+    </style>
+</head>
+<body>
+
+    <h2>🚨 Euromaster Safety-Check: Finde alle 8 Mängel!</h2>
+    <div class="counter">Gefunden: <span id="score">0</span> / 8</div>
+
+    <div class="container" id="game-container">
+        <img src="werkstatt.jpg" alt="Werkstatt Sicherheit">
+
+        <div class="hotspot" style="top: 48%; left: 52%; width: 8%; height: 35%;" data-info="Mitarbeiter unter schwebender Last"></div>
+        
+        <div class="hotspot" style="top: 78%; left: 38%; width: 12%; height: 10%;" data-info="Rutschgefahr: Öl/Flüssigkeit"></div>
+        
+        <div class="hotspot" style="top: 30%; left: 2%; width: 12%; height: 50%;" data-info="Fluchtweg durch Reifen/Kanister verstellt"></div>
+        
+        <div class="hotspot" style="top: 75%; left: 63%; width: 8%; height: 10%;" data-info="Fehlende Sicherheitsschuhe (PSA)"></div>
+        
+        <div class="hotspot" style="top: 45%; left: 33%; width: 10%; height: 5%;" data-info="Hebebühnen-Arme falsch angesetzt"></div>
+        
+        <div class="hotspot" style="top: 30%; left: 25%; width: 5%; height: 15%;" data-info="Notausschalter/Bedienpult nicht frei zugänglich"></div>
+        
+        <div class="hotspot" style="top: 35%; left: 80%; width: 6%; height: 30%;" data-info="Ablenkung durch Handy während des Betriebs"></div>
+        
+        <div class="hotspot" style="top: 48%; left: 24%; width: 10%; height: 10%;" data-info="Fahrzeug nicht gegen Wegrollen gesichert"></div>
+    </div>
+
+    <script>
+        let foundCount = 0;
+        document.querySelectorAll('.hotspot').forEach(spot => {
+            spot.addEventListener('click', function() {
+                if (!this.classList.contains('found')) {
+                    this.classList.add('found');
+                    foundCount++;
+                    document.getElementById('score').innerText = foundCount;
+                    if(foundCount === 8) alert("Glückwunsch! Alle Sicherheitsrisiken gefunden.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
